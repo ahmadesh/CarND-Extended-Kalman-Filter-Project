@@ -1,4 +1,6 @@
 #include "kalman_filter.h"
+#include <iostream>
+
 
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
@@ -48,6 +50,13 @@ void KalmanFilter::Update(const VectorXd &z) {
     P_ = (I - K * H_) * P_;
 }
 
+double constrainAngle(double x){
+    x = fmod(x + M_PI,2*M_PI);
+    if (x < 0)
+        x += 2*M_PI;
+    return x - M_PI;
+}
+
 void KalmanFilter::UpdateEKF(const VectorXd &z) {
   /**
   TODO:
@@ -58,31 +67,21 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
     float vx = x_(2);
     float vy = x_(3);
     
-    float c1 = sqrt(px*px+py*py);
-    float c2 = atan2(py, px);
-    if (c1 < 0.0000001)
-    {
-        return;
-    }
-    float c3 = (px*vx+py*vy)/c1;
-    
     VectorXd h(3);
-    h << c1, c2, c3;
-    
+    float c1 = sqrt(px * px + py * py);
+    float c2 = atan2(py, px);
+    if (c1 < 0.001) {
+        h << c1, c2, 0;
+    } else {
+        float c3 = (px * vx + py * vy)/c1;
+        h << c1, c2, c3;
+    }
     VectorXd y = z - h;
-    // shifting y[1] to [-pi, pi] range
-    float PI = 2*acos(0.0);
-    float phi = y[1] + PI;
-    int dev = (int) phi/(2*PI);
-    float phi_ = phi - 2*PI*((float) dev);
-    phi = phi_ - PI;
-    y[1] = phi;
-    //
+    y[1] = constrainAngle(y[1]);
     MatrixXd Ht = H_.transpose();
     MatrixXd S = H_ * P_ * Ht + R_;
     MatrixXd Si = S.inverse();
     MatrixXd K =  P_ * Ht * Si;
-    
     //new state
     x_ = x_ + (K * y);
     MatrixXd I = MatrixXd::Identity(4, 4);
