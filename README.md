@@ -19,14 +19,14 @@ This project involves the Term 2 Simulator which can be downloaded [here](https:
 1. Clone this repo.
 2. Make a build directory: `mkdir build && cd build`
 3. Compile: `cmake .. && make` 
-4. Run it: `./ExtendedKF path/to/input.txt path/to/output.txt`. 
+4. Run the file: `./ExtendedKF. 
 
 
 ## Sensor fusion algorithm
 I followed the Kalman Filter algorithm to predict and update based on  measruments from Radar and Lidar sensors. The predict function is the same for either measruments while the update is different for Lidar and Radar measurements. The Lidar update is based on the linear Kalman Filter formulas while the Radar update is based on Extended Kalman Filter (EKF) formulas with calculating Jacobian matrix at the current state.
 
 ## Results
-The final state estimation [px, py, vx, vy] RMSE with both sensors was reported to be [0.0964, 0.0852, 0.4151, 0.4313] which satisfies the project expection of [.11, .11, 0.52, 0.52]. Here is the last frame of simulation in the simulator window: 
+The final state estimation [px, py, vx, vy] RMSE with both sensors was reported to be [0.0964, 0.0852, 0.4151, 0.4313] which satisfies the project expection of [.11, .11, 0.52, 0.52]. Here is the last frame of simulation in the simulator window with the calculated RMSE: 
 
 <img src="./Output/Both.png" width="500" alt="Combined Image" />
 
