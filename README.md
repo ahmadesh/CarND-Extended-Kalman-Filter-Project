@@ -9,9 +9,10 @@ This project involves the Term 2 Simulator which can be downloaded [here](https:
 
 `src`: The folder containing the source codes:
 * `main.cpp`: The main file to read data, call EKF functins to process data and estimate states and calculate RMSE
-    ** `fusionEKF.cpp`: Initializes the sates, calls the Kalman Filter predict and update functions.
-    ** `kalman_filter.cpp`: Contains the predict function and update for Radar and Lidar measurements.
-    ** `tools.cpp`: Contains functions for caliclating Jacobian matrix and RMSE.
+* `fusionEKF.cpp`: Initializes the sates, calls the Kalman Filter predict and update functions.
+* `kalman_filter.cpp`: Contains the predict function and update for Radar and Lidar measurements.
+* `tools.cpp`: Contains functions for caliclating Jacobian matrix and RMSE.
+
 `data`: A forlder containing the sensor data
 
 ## How to run the codes
@@ -19,7 +20,7 @@ This project involves the Term 2 Simulator which can be downloaded [here](https:
 1. Clone this repo.
 2. Make a build directory: `mkdir build && cd build`
 3. Compile: `cmake .. && make` 
-4. Run the file: `./ExtendedKF. 
+4. Run the file: `./ExtendedKF`. 
 
 
 ## Sensor fusion algorithm
